@@ -31,7 +31,11 @@ class _ZoneButtonState extends State<ZoneButton> {
             onPressed: (){
               Provider.of<PageSelect>(context,listen: false).selectPage(widget.pageIndexWhenSelected);
             },
-            child: Text(widget.zoneLabel,style: TextStyle(color: Colors.white, fontSize: 30),),
+            child: Text(
+              widget.zoneLabel,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white, fontSize: 30),
+            ),
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey[800],
                 shape: RoundedRectangleBorder(

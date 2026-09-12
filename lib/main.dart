@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 20, 5,20),
-            child: Text('V1.0', style: TextStyle(color: Colors.black),),
+            child: Text('V1.1', style: TextStyle(color: Colors.black),),
           ),
           Padding(
               padding: EdgeInsets.only(right: 20.0),

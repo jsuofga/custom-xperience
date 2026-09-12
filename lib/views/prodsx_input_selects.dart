@@ -37,7 +37,7 @@ class _ProDsxInputSelects extends State<ProDsxInputSelects> {
                     ProDsxTx(txLabel: 'Cable1', chId: "001",child: Icon(Icons.settings_input_hdmi_sharp, size: 20.0, color: Colors.white,)),
                     ProDsxTx(txLabel: 'Cable2',chId: "002",child: Icon(Icons.settings_input_hdmi_sharp, size: 20.0,color: Colors.white,)),
                     ProDsxTx(txLabel: 'Cable3',chId: "003",child: Icon(Icons.settings_input_hdmi_sharp, size: 20.0,color: Colors.white,)),
-                    ProDsxTx(txLabel: 'AppleTV',chId: "004",child: Icon(Icons.settings_input_hdmi_sharp, size: 20.0,color: Colors.white,))
+                    ProDsxTx(txLabel: 'AppleTV1',chId: "004",child: Icon(Icons.settings_input_hdmi_sharp, size: 20.0,color: Colors.white,))
                   ],
 
                 ),
@@ -46,8 +46,16 @@ class _ProDsxInputSelects extends State<ProDsxInputSelects> {
                   children: [
                     ProDsxTx(txLabel: 'PlayStation', chId: "005",child: Icon(Icons.videogame_asset, size: 20.0,color: Colors.white,)),
                     ProDsxTx(txLabel: 'DJ Boot PC',chId: "006",child: Icon(Icons.spatial_audio, size: 20.0,color: Colors.white,)),
-                    ProDsxTx(txLabel: 'IT Monitor 1',chId: "007",child: Icon(Icons.monitor, size: 20.0,color: Colors.white,)),
-                    ProDsxTx(txLabel: 'IT Monitor 2',chId: "008",child: Icon(Icons.monitor, size: 20.0,color: Colors.white,))
+                    ProDsxTx(txLabel: 'IT Monitor ',chId: "007",child: Icon(Icons.monitor, size: 20.0,color: Colors.white,)),
+                    ProDsxTx(txLabel: 'AppleTV2',chId: "008",child: Icon(Icons.settings_input_hdmi_sharp, size: 20.0,color: Colors.white,))
+                  ],
+
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ProDsxTx(txLabel: 'MiddleBar DJ', chId: "009",child: Icon(Icons.spatial_audio, size: 20.0,color: Colors.white,)),
+
                   ],
 
                 ),
