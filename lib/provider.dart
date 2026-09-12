@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:html';
-import 'dart:html' as html;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,10 +45,10 @@ class SwitchProDsxRX extends ChangeNotifier {
 
     chID = _chID;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    rxID = await prefs.getString('rxID') ?? '';
-    vwType = await prefs.getInt('vwType')?? 0 ;
-    startRX = await prefs.getInt('startRX')?? 0 ;
-    endRX = await prefs.getInt('endRX')?? 0;
+    rxID = prefs.getString('rxID') ?? '';
+    vwType = prefs.getInt('vwType')?? 0 ;
+    startRX = prefs.getInt('startRX')?? 0 ;
+    endRX = prefs.getInt('endRX')?? 0;
 
     if( vwType == 1){
       http.get(Uri.parse('http://172.31.3.${rxID}/cgi-bin/query.cgi?cmd=vw:off'));
@@ -123,10 +121,11 @@ class SwitchHdlanRx extends ChangeNotifier{
 
     chID = _chID;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    rxID = await prefs.getString('hdlan_rxID') ?? '';
+    rxID = prefs.getString('hdlan_rxID') ?? '';
 
-    print("http://${html.window.location.hostname.toString()}:1880/switchRX/${rxID}/vlan/${int.parse(chID)+1}");
-    http.get(Uri.parse("http://${html.window.location.hostname.toString()}:1880/switchRX/${rxID}/vlan/${int.parse(chID)+1}"));
+    String host = Uri.base.host.isNotEmpty ? Uri.base.host : 'localhost';
+    print("http://${host}:1880/switchRX/${rxID}/vlan/${int.parse(chID)+1}");
+    http.get(Uri.parse("http://${host}:1880/switchRX/${rxID}/vlan/${int.parse(chID)+1}"));
 
   }
 
@@ -142,16 +141,14 @@ class HdlanRxStatus extends ChangeNotifier {
 
   getSnmpStatus() async {
     String _jsonData = '';
-    // print("http://${html.window.location.hostname.toString()}:1880/ciscoStat");
-    http.get(Uri.parse("http://${html.window.location.hostname.toString()}:1880/ciscoStat")).
+    String host = Uri.base.host.isNotEmpty ? Uri.base.host : 'localhost';
+    http.get(Uri.parse("http://${host}:1880/ciscoStat")).
     then((response) =>
     {
       _jsonData = response.body, // get data as JSON string
       print(_jsonData),
-      // print(jsonDecode(_jsonData)["PortVlanMembership"]), // convert JSON to Map
       switchIPAddress = jsonDecode(_jsonData)["SwitchIPAddress"],
       RxSnmpStatus = jsonDecode(_jsonData)["PortVlanMembership"] ,
-      // print(RxSnmpStatus),
       print(switchIPAddress),
 
       RxSnmpStatus.asMap().forEach((index, item) => {
@@ -187,5 +184,3 @@ class RxStatus extends ChangeNotifier  {
   }
 
 }
-
-

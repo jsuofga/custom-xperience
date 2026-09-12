@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:xperience_flutter/provider.dart';
 import 'package:http/http.dart' as http;
-import 'dart:html' as html;
 
 class IpAddressForm extends StatefulWidget {
   const IpAddressForm({Key? key}) : super(key: key);
@@ -64,7 +63,6 @@ class _IpAddressForm extends State<IpAddressForm> {
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                         ),
-                        // icon:Icon(Icons.person),
                         hintText: 'Enter IP Address of Cisco Switch for the SG350 Switch (black)',
                         labelText: _ip_mdf
                     ),
@@ -74,7 +72,6 @@ class _IpAddressForm extends State<IpAddressForm> {
                       });
                     },
                     validator: (val) {
-                      //Regular Expression check of IP address
                       if(!RegExp(r"^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$").hasMatch(val!) ){
                         return 'Enter IP address of MDF Switch (switch1)';
                       }else{
@@ -101,7 +98,7 @@ class _IpAddressForm extends State<IpAddressForm> {
                             icon: Icon(Icons.close),
                             label: Text('Cancel'),
                             style: ElevatedButton.styleFrom(
-                              primary:Colors.red,
+                              backgroundColor:Colors.red,
                             ),
                             onPressed: () {
                               Provider.of<PageSelect>(context,listen: false).selectPage(0);
@@ -111,15 +108,13 @@ class _IpAddressForm extends State<IpAddressForm> {
                             icon: Icon(Icons.check),
                             label: Text('Submit'),
                             style: ElevatedButton.styleFrom(
-                              primary:Colors.green,
+                              backgroundColor:Colors.green,
                             ),
                             onPressed: () {
-                              // Validate returns true if the form is valid, or false otherwise.
                               if (_formKey.currentState!.validate()) {
-                                // If the form is valid,do the following:
-                                // Save IP address to Pi UserSwitchConfig
-                                print('http://${html.window.location.hostname.toString()}:3000/write/UserSwitchConfig/{"ip":"${_ip_mdf}","TXports":10,"RXports":38 }');
-                                http.get(Uri.parse('http://${html.window.location.hostname.toString()}:3000/write/UserSwitchConfig/{"ip":"${_ip_mdf}","model":"SG350-52","TXports":10,"RXports":38}'));
+                                String host = Uri.base.host.isNotEmpty ? Uri.base.host : 'localhost';
+                                print('http://${host}:3000/write/UserSwitchConfig/{"ip":"${_ip_mdf}","TXports":10,"RXports":38 }');
+                                http.get(Uri.parse('http://${host}:3000/write/UserSwitchConfig/{"ip":"${_ip_mdf}","model":"SG350-52","TXports":10,"RXports":38}'));
                                 Provider.of<PageSelect>(context,listen: false).selectPage(0);
                               }
                             }
@@ -137,7 +132,7 @@ class _IpAddressForm extends State<IpAddressForm> {
                       icon: Icon(Icons.close),
                       label: Text('Cancel'),
                       style: ElevatedButton.styleFrom(
-                        primary:Colors.red,
+                        backgroundColor:Colors.red,
                       ),
                       onPressed: () {
                         Provider.of<PageSelect>(context,listen: false).selectPage(0);

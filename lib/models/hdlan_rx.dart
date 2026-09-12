@@ -1,8 +1,6 @@
-import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xperience_flutter/provider.dart';
-import 'package:http/http.dart' as http;
 
 class HdlanRx extends StatefulWidget {
   //Constructor
@@ -49,7 +47,7 @@ class _HdlanRx extends State<HdlanRx> {
 
                   ),
                   style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
+                    shape: WidgetStateProperty.all(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.0),
                           side: BorderSide(color:Colors.lightBlue)
@@ -60,10 +58,6 @@ class _HdlanRx extends State<HdlanRx> {
                   onPressed: () {
                      Provider.of<PageSelect>(context,listen: false).selectPage(4);
                      Provider.of<SwitchHdlanRx>(context,listen: false).selectRx(widget.rxId);
-                    // print('172.31.3.1/cgi-bin/query.cgi?cmd=rxswitch:00${widget.chId}');
-                    // http.get(Uri.parse('http://172.31.3.1/cgi-bin/query.cgi?cmd=rxswitch:00${widget.chId}'));
-
-
                   }
               ),
             ),

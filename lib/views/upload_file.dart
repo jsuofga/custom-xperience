@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'dart:html' as html;
 import 'dart:typed_data';
 import 'dart:async';
-import 'dart:convert';
 import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../provider.dart';
 
@@ -23,42 +22,26 @@ class _UploadfileState extends State<Uploadfile> {
   bool uploadFinished= false;
   String userPrompt = 'Please load the dist.tar file provided';
   late List<int> _selectedFile;
-  late Uint8List _bytesData ;
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-  startWebFilePicker() async {
-    html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
-    uploadInput.multiple = false;
-    uploadInput.draggable = false;
-    uploadInput.accept = '.tar';
-    uploadInput.click();
+  startFilePicker() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.any,
+      withData: true,
+    );
 
-    uploadInput.onChange.listen((e) {
-      final files = uploadInput.files;
-      final file = files?[0];
-      final reader = new html.FileReader();
-
-      reader.onLoadEnd.listen((e) {
-        _handleResult(reader.result!);
-      });
-      reader.readAsDataUrl(file as html.Blob);
-
+    if (result != null && result.files.single.bytes != null) {
       setState(() {
+        _selectedFile = result.files.single.bytes!;
         showSelectDistTar = false;
         showUpload = true;
-
-
       });
-    });
+    }
   }
-  void _handleResult(Object result) {
-    setState(() {
-      _bytesData = Base64Decoder().convert(result.toString().split(",").last);
-      _selectedFile = _bytesData;
-    });
-  }
+
   Future makeRequest() async {
-    var url = Uri.parse("http://${html.window.location.hostname.toString()}:1880/update");
+    String host = Uri.base.host.isNotEmpty ? Uri.base.host : 'localhost';
+    var url = Uri.parse("http://${host}:1880/update");
     var request = new http.MultipartRequest("POST", url);
 
     request.files.add(await http.MultipartFile.fromBytes(
@@ -85,7 +68,6 @@ class _UploadfileState extends State<Uploadfile> {
 
 
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
 
     return Container(
         child: Center(
@@ -95,13 +77,12 @@ class _UploadfileState extends State<Uploadfile> {
               Visibility(visible: showSelectDistTar, child: Text('Select the dist.tar file provided',style: TextStyle(color: Colors.white, fontSize: 26),)),
               Visibility(visible: uploading, child: Text('Uploading',style: TextStyle(color: Colors.white, fontSize: 26),)),
               Visibility(visible: uploadFinished, child: Text('Done',style: TextStyle(color: Colors.white, fontSize: 26),)),
-              new Form(
-               // autovalidate: true,
+              Form(
                 autovalidateMode: AutovalidateMode.always,
                 key: _formKey,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 16.0, left: 28),
-                  child: new Container(
+                  child: Container(
                       width: 350,
                       child: Column(
                           children: [
@@ -109,7 +90,7 @@ class _UploadfileState extends State<Uploadfile> {
                               visible:!showUpload,
                               child: ElevatedButton( child: Text("Select File"),
                                 onPressed: (){
-                                  startWebFilePicker();
+                                  startFilePicker();
                                   setState(() {
                                     showSelectDistTar = false;
                                   });

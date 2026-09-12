@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:html' as html;
-import 'dart:js' as js;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xperience_flutter/views/hdlan_room.dart';
@@ -36,25 +34,18 @@ void main() => runApp(
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
 
-  //Defined variables
-
   final List _pageList = [Zoneselect(),ProDsxRoom(),ProDsxInputSelects(),HdlanRoom(),HdlanInputSelects(),AdminAccess(),IpAddressForm(),Uploadfile()];
 
 
   @override
-
-  initState() {
-    //
+  void initState() {
+    super.initState();
     Timer.periodic(const Duration(seconds: 5), (timer) {
       Provider.of<RxStatus>(context,listen: false).getFeedback();
       Provider.of<HdlanRxStatus>(context,listen: false).getSnmpStatus();
@@ -62,15 +53,10 @@ class _HomePageState extends State<HomePage> {
     print("initState Called");
   }
 
+  @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -131,9 +117,6 @@ class _HomePageState extends State<HomePage> {
                 },
               ))
       ),
- // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
-
-

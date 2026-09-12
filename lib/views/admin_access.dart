@@ -31,7 +31,6 @@ class _AdminAccessState extends State<AdminAccess> {
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                         ),
-                        // icon:Icon(Icons.person),
                         hintText: 'Enter Admin Password',
                         labelText: ''
                     ),
@@ -39,7 +38,6 @@ class _AdminAccessState extends State<AdminAccess> {
 
                     },
                     validator: (val) {
-                      //Regular Expression check of IP address
                       if(val != 'octava'){
                         return 'Enter valid Admin Password';
                       }else{
@@ -62,7 +60,7 @@ class _AdminAccessState extends State<AdminAccess> {
                         icon: Icon(Icons.close),
                         label: Text('Cancel'),
                         style: ElevatedButton.styleFrom(
-                          primary:Colors.red,
+                          backgroundColor:Colors.red,
                         ),
                         onPressed: () {
                           Provider.of<PageSelect>(context,listen: false).selectPage(0);
@@ -72,12 +70,10 @@ class _AdminAccessState extends State<AdminAccess> {
                         icon: Icon(Icons.check),
                         label: Text('Submit'),
                         style: ElevatedButton.styleFrom(
-                          primary:Colors.green,
+                          backgroundColor:Colors.green,
                         ),
                         onPressed: () {
-                          // Validate returns true if the form is valid, or false otherwise.
                           if (_formKey.currentState!.validate()) {
-                            // If the form is valid,do the following:
                               if( Provider.of<ActionSelected>(context,listen: false).showUploadOrIPform =='upload_form'){
                                 print('show upload form');
                                 Provider.of<PageSelect>(context,listen: false).selectPage(7);//show FileUpload form page

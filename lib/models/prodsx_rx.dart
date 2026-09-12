@@ -1,8 +1,6 @@
-import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xperience_flutter/provider.dart';
-import 'package:http/http.dart' as http;
 
 class ProDsxRx extends StatefulWidget {
   //Constructor
@@ -48,7 +46,7 @@ class _ProDsxRx extends State<ProDsxRx> {
 
                 ),
                 style: ButtonStyle(
-                  shape: MaterialStateProperty.all(
+                  shape: WidgetStateProperty.all(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                         side: BorderSide(color:Colors.lightGreenAccent)
@@ -59,10 +57,6 @@ class _ProDsxRx extends State<ProDsxRx> {
                 onPressed: () {
                   Provider.of<PageSelect>(context,listen: false).selectPage(2);
                   Provider.of<SwitchProDsxRX>(context,listen: false).selectRx(widget.rxId);
-                  // print('172.31.3.1/cgi-bin/query.cgi?cmd=rxswitch:00${widget.chId}');
-                  // http.get(Uri.parse('http://172.31.3.1/cgi-bin/query.cgi?cmd=rxswitch:00${widget.chId}'));
-
-
                 }
             ),
           ),
